@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="SimpleVersionControl.App.UserControls.ContentArea"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SimpleVersionControl.App.UserControls"
+             xmlns:content="clr-namespace:SimpleVersionControl.App.UserControls.ContentAreaControls"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             Foreground="{DynamicResource MaterialDesignDarkForeground}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <content:NothingOpenPage x:Name="EmptyPage" Visibility="Visible" VerticalAlignment="Center" Margin="10"></content:NothingOpenPage>
+        <content:ChangeLogPage x:Name="ChangeLogPage" Visibility="Collapsed"></content:ChangeLogPage>
+        <content:VersionPage x:Name="VersionPage" Visibility="Collapsed"></content:VersionPage>
+        <content:ChangePage x:Name="ChangePage" Visibility="Collapsed"></content:ChangePage>
+    </Grid>
+</UserControl>

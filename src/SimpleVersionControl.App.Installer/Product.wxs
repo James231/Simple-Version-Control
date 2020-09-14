@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+          xmlns:netfx="http://schemas.microsoft.com/wix/NetFxExtension">
+  <Product Id="*" Name="Simple Version Control App" Language="1033" Version="1.0.0.0" Manufacturer="Jam-Es.com" UpgradeCode="05e56518-5f22-4069-bd95-dcdb38b4ee53">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+    <MajorUpgrade DowngradeErrorMessage="A newer version of Simple Version App is already installed." />
+    <MediaTemplate EmbedCab="yes"/>
+
+    <Feature Id="ProductFeature" Title="SimpleVersionControl.App.Installer" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+      <ComponentRef Id="ApplicationShortcut" />
+      <ComponentRef Id="RootInstallFolder" />
+    </Feature>
+
+    <PropertyRef Id="WIX_IS_NETFRAMEWORK_472_OR_LATER_INSTALLED"/>
+    <Condition Message=".NET Framework 4.7.2 or later not found. Install the .NET Framework and try again.">
+      <![CDATA[INSTALLED OR WIX_IS_NETFRAMEWORK_472_OR_LATER_INSTALLED]]>
+    </Condition>
+  </Product>
+
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="Simple Version Control"/>
+      </Directory>
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="Simple Version Control">
+          <Component Id="RootInstallFolder" Guid="1100b0fe-1d00-4555-a4ce-b9b88625db44">
+            <CreateFolder />
+            <RemoveFile Id="RootInstallFolder" Name="*.*" On="uninstall" />
+          </Component>
+        </Directory>
+      </Directory>
+    </Directory>
+  </Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="ApplicationShortcut" Guid="65e2f333-eedb-495c-a51c-65af292d3f17">
+        <!--Start Menu Shortcut Folder-->
+        <Shortcut Id="ApplicationStartMenuShortcut"
+                    Name="Simple Version Control App"
+                    Description="Opens Windows Simple Version Control App by Jam-Es.com"
+                    Target="[#MainExe]"
+                    WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+        <RemoveFolder Id="CleanUpShortCut" Directory="ApplicationProgramsFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\JamEs.com\SimpleVersionControl" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+
+  <Fragment>
+    <!-- The Root Install Folder -->
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <Component Id="ProductComponent">
+        <File Id="MainExe" Source="$(var.SimpleVersionControl.App.TargetPath)" />
+      </Component>
+      <Component Id="MaterialDesignThemes.Wpf.dll" Guid="29569449-eb6c-4185-bba0-ea0eaa528a9d">
+        <File Id="MaterialDesignThemes.Wpf.dll" Source="$(var.SimpleVersionControl.App.TargetDir)MaterialDesignThemes.Wpf.dll" KeyPath="yes" Checksum="yes"/>
+      </Component>
+      <Component Id="MaterialDesignColors.dll" Guid="3b9d9953-3ef0-47a5-9090-1ef7c37b140f">
+        <File Id="MaterialDesignColors.dll" Source="$(var.SimpleVersionControl.App.TargetDir)MaterialDesignColors.dll" KeyPath="yes" Checksum="yes"/>
+      </Component>
+      <Component Id="Newtonsoft.Json.dll" Guid="4d1e31f4-cd6d-4920-9057-04a850b100c4">
+        <File Id="Newtonsoft.Json.dll" Source="$(var.SimpleVersionControl.App.TargetDir)Newtonsoft.Json.dll" KeyPath="yes" Checksum="yes"/>
+      </Component>
+      <Component Id="ICSharpCode.AvalonEdit.dll" Guid="738bad53-c98e-4540-8d26-f268b3f3cad0">
+        <File Id="ICSharpCode.AvalonEdit.dll" Source="$(var.SimpleVersionControl.App.TargetDir)ICSharpCode.AvalonEdit.dll" />
+      </Component>
+      <Component Id="HL.dll" Guid="87315b7e-9648-4199-97c7-b352c20f9287">
+        <File Id="HL.dll" Source="$(var.SimpleVersionControl.App.TargetDir)HL.dll" />
+      </Component>
+      <Component Id="TextEditLib.dll" Guid="6d5dcef9-afe7-4ea0-8055-08009ee3b07c">
+        <File Id="TextEditLib.dll" Source="$(var.SimpleVersionControl.App.TargetDir)TextEditLib.dll" />
+      </Component>
+      <Component Id="SimpleVersionControl.dll" Guid="d41f07ec-8d3d-4cfb-90ad-6a2144ee305a">
+        <File Id="SimpleVersionControl.dll" Source="$(var.SimpleVersionControl.App.TargetDir)SimpleVersionControl.dll" />
+      </Component>
+      <Component Id="ConfigFile" Guid="7642d7d7-e516-4c8d-ac41-4c1693645687">
+        <File Id="ConfigFile" Source="$(var.SimpleVersionControl.App.TargetDir)SimpleVersionControl.App.exe.config" />
+      </Component>
+    </ComponentGroup>
+  </Fragment>
+</Wix>

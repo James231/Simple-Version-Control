@@ -1,0 +1,98 @@
+﻿<UserControl x:Class="SimpleVersionControl.App.UserControls.TitleBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SimpleVersionControl.App.UserControls"
+             xmlns:title="clr-namespace:SimpleVersionControl.App.UserControls.TitleBarControls"
+             Foreground="{DynamicResource MaterialDesignDarkForeground}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Border Name="border" Height="32">
+        <Grid Background="Black">
+            <Label PreviewMouseDown="System_MouseDown" PreviewMouseMove="System_MouseMove" Padding="0" VerticalContentAlignment="Center" Margin="0,0,0,0" Foreground="White">
+            </Label>
+
+            <title:FileMenu x:Name="FileMenu"></title:FileMenu>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Image VerticalAlignment="Center" Width="22" Height="22" Margin="0 0 8 0" Source="../icon-256x256.ico"></Image>
+                <TextBlock VerticalAlignment="Center" FontSize="20" FontWeight="Bold">Version Control App</TextBlock>
+            </StackPanel>
+
+            <!-- System Button Area -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Background="White">
+
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type Button}" x:Key="systemButton">
+                        <Setter Property="Padding" Value="0"/>
+                        <Setter Property="Height" Value="32"/>
+                        <Setter Property="HorizontalAlignment" Value="Right"/>
+                        <Setter Property="VerticalAlignment" Value="Top"/>
+                        <Setter Property="Background" Value="black"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type Button}">
+                                    <Border Background="{TemplateBinding Background}"  BorderThickness="0">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="Button.IsMouseOver" Value="True">
+                                <Setter Property="Button.Background" Value="#414142" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Resources>
+
+                <Button Click="Mimimize_Click" Style="{StaticResource systemButton}" Width="45">
+                    <Rectangle Width="11"
+                                       Stroke="white"
+                                       StrokeThickness="1"/>
+                </Button>
+
+                <Button Click="Maximize_Click" Style="{StaticResource systemButton}" Width="45">
+                    <Grid>
+                        <Rectangle Name="rectMax" Width="10" Height="10"
+                                       Stroke="white"
+                                       StrokeThickness="1"/>
+                        <Canvas Name="rectMin"  Visibility="Hidden" RenderOptions.EdgeMode="Aliased">
+                            <Polyline Points="2.375,2 2.375,0.375 10.625,0.375 10.625,8.625 9,8.625"
+                                              StrokeThickness="0.75" Stroke="white" RenderOptions.EdgeMode="Aliased" RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <Rectangle Width="9" Height="9"
+                                       Stroke="white"
+                                       StrokeThickness="1" Margin="0,2,2,0" SnapsToDevicePixels="True" RenderOptions.EdgeMode="Aliased" RenderOptions.BitmapScalingMode="HighQuality" />
+                        </Canvas>
+                    </Grid>
+                </Button>
+
+                <Button Click="Close_Click" Width="45">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource systemButton}">
+                            <Style.Triggers>
+                                <Trigger Property="Button.IsMouseOver" Value="True">
+                                    <Setter Property="Button.Background" Value="#E81123" />
+                                </Trigger>
+                            </Style.Triggers>
+                            <Setter Property="Button.Background" Value="black" />
+                        </Style>
+                    </Button.Style>
+                    <Canvas Height="25" Width="35">
+                        <Line    
+                                    X1="12" Y1="8" 
+                                    X2="22" Y2="18"    
+                                    Stroke="white" StrokeThickness="1"/>
+                        <Line    
+                                    X1="12" Y1="18"    
+                                    X2="22" Y2="8"  
+                                    Stroke="white" StrokeThickness="1"/>
+                    </Canvas>
+                </Button>
+
+            </StackPanel>
+        </Grid>
+    </Border>
+</UserControl>

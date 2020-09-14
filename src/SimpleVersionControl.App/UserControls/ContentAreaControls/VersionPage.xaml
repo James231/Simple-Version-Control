@@ -1,0 +1,91 @@
+﻿<UserControl x:Class="SimpleVersionControl.App.UserControls.ContentAreaControls.VersionPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SimpleVersionControl.App.UserControls.ContentAreaControls"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:avEditEx="clr-namespace:TextEditLib;assembly=TextEditLib"
+             mc:Ignorable="d" 
+             Foreground="{DynamicResource MaterialDesignDarkForeground}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <ScrollViewer>
+        <StackPanel Orientation="Vertical">
+
+            <DockPanel Margin="16 15 16 7">
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
+                    <Button Height="48" Click="BackButtonPressed">
+                        <StackPanel Margin="0 0 5 0" Orientation="Horizontal" VerticalAlignment="Center">
+                            <materialDesign:PackIcon Margin="-7 0 -7 0" Kind="ChevronLeft" VerticalAlignment="Center" Width="30" Height="30"></materialDesign:PackIcon>
+                            <TextBlock FontSize="20" VerticalAlignment="Center">Back</TextBlock>
+                        </StackPanel>
+                    </Button>
+                    <TextBlock x:Name="VersionTitle" VerticalAlignment="Center" FontSize="32" Margin="10 0 10 0">Version:</TextBlock>
+                </StackPanel>
+                <TextBox x:Name="VersionField" VerticalAlignment="Center" FontSize="32" TextChanged="VersionField_TextChanged">1.0.0</TextBox>
+            </DockPanel>
+
+            <StackPanel Orientation="Vertical" Margin="16 7 16 7">
+                <DockPanel Margin="0 3 0 3">
+                    <TextBlock DockPanel.Dock="Left" Margin="0 0 10 0" VerticalAlignment="Center" FontSize="16">Description:</TextBlock>
+                    <TextBox x:Name="DescriptionField" TextWrapping="Wrap" AcceptsReturn="True" FontSize="16" TextChanged="DescriptionField_TextChanged"></TextBox>
+                </DockPanel>
+                <DockPanel Margin="0 3 0 3">
+                    <TextBlock DockPanel.Dock="Left" Margin="0 0 10 0" VerticalAlignment="Center" FontSize="16">Download Link:</TextBlock>
+                    <TextBox x:Name="LinkField" FontSize="16" TextChanged="LinkField_TextChanged"></TextBox>
+                </DockPanel>
+                <DockPanel Margin="0 3 0 3">
+                    <TextBlock DockPanel.Dock="Left" Margin="0 0 10 0" VerticalAlignment="Center" FontSize="16">Release Date:</TextBlock>
+                    <DatePicker x:Name="ReleaseDateField" FontSize="16" SelectedDateChanged="ReleaseDateField_SelectedDateChanged"></DatePicker>
+                </DockPanel>
+                <DockPanel Margin="0 3 0 3">
+                    <TextBlock DockPanel.Dock="Left" Margin="0 0 10 0" VerticalAlignment="Center" FontSize="16">Is Version Still Functioning?</TextBlock>
+                    <CheckBox Margin="10 4 0 0" x:Name="FunctioningField" Style="{DynamicResource MaterialDesignSwitchAccentToggleButton}" HorizontalAlignment="Left" VerticalAlignment="Center" Checked="FunctioningField_Checked" Unchecked="FunctioningField_Unchecked"></CheckBox>
+                </DockPanel>
+            </StackPanel>
+
+            <materialDesign:Card Margin="16 7 16 7">
+                <Expander x:Name="AdditionalDataExpander" Padding="0" Margin="-20 -8 0 -6" IsExpanded="False" FlowDirection="RightToLeft" Background="{DynamicResource MaterialDesignCardBackground}">
+                    <Expander.Header>
+                        <DockPanel FlowDirection="LeftToRight" Margin="-25 0 -10 -2">
+                            <TextBlock FontSize="16">Additional Version Data</TextBlock>
+                        </DockPanel>
+                    </Expander.Header>
+                    <Grid FlowDirection="LeftToRight" Margin="24 12 34 20">
+                        <StackPanel>
+                            <TextBlock FontSize="14">Add any additional fields to be stored in the Version as JSON code below:</TextBlock>
+                            <avEditEx:TextEdit
+                                Margin="0 10 0 0"
+                                Name="AdditionalDataField"
+                                SyntaxHighlighting="{Binding HighlightingDefinition, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                                FontFamily="Consolas"
+                                FontSize="16"
+                                Background="#FF1E1E1E"
+                                Foreground="White"
+                                ShowLineNumbers="True"
+                                LineNumbersForeground="#999"
+                                EditorCurrentLineBackground="#222"
+                                TextChanged="AdditionalDataField_TextChanged"/>
+                            <TextBlock x:Name="JsonErrorText" Visibility="Collapsed" Foreground="LightPink" FontSize="14">Error: The text you've entered is not valid JSON!</TextBlock>
+                        </StackPanel>
+                    </Grid>
+                </Expander>
+            </materialDesign:Card>
+
+            <DockPanel>
+                <Button DockPanel.Dock="Right" Margin="18 10 20 0" Width="150" HorizontalAlignment="Left" Click="NewChangeButtonPressed">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <materialDesign:PackIcon Kind="Add" VerticalAlignment="Center"></materialDesign:PackIcon>
+                        <TextBlock VerticalAlignment="Center">New Change</TextBlock>
+                    </StackPanel>
+                </Button>
+
+                <TextBlock Margin="18 20 0 0" FontSize="20" TextWrapping="Wrap">Add Changes made in this version to the list below:</TextBlock>
+            </DockPanel>
+
+            <StackPanel x:Name="ChangeParent" Orientation="Vertical" Margin="0 0 0 50">
+            </StackPanel>
+
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>

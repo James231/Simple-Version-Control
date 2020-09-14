@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="SimpleVersionControl.App.UserControls.ContentAreaControls.NothingOpenPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SimpleVersionControl.App.UserControls.ContentAreaControls"
+             mc:Ignorable="d"
+             Foreground="{DynamicResource MaterialDesignDarkForeground}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <StackPanel>
+        <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" FontSize="20" TextAlignment="Center" Foreground="{DynamicResource MaterialDesignDarkForeground}">
+                No changelog loaded. Select a `changelog.json` file to open or create a new one.
+        </TextBlock>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 30 0 0">
+            <Button Margin="10 0 10 0" Click="OpenButtonPressed">Open changelog.json</Button>
+            <Button Margin="10 0 10 0" Click="NewButtonPressed">Create New</Button>
+        </StackPanel>
+    </StackPanel>
+</UserControl>
