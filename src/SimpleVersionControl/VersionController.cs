@@ -63,7 +63,7 @@ namespace SimpleVersionControl
                 return false;
             }
 
-            string latestVersionString = CachedChangeLog.Versions.Last().VersionName;
+            string latestVersionString = CachedChangeLog.Versions.First().VersionName;
             return latestVersionString == CurrentVersion;
         }
 
@@ -148,7 +148,7 @@ namespace SimpleVersionControl
                 return null;
             }
 
-            return CachedChangeLog.Versions.Last();
+            return CachedChangeLog.Versions.First();
         }
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace SimpleVersionControl
                 return null;
             }
 
-            return CachedChangeLog.Versions.First();
+            return CachedChangeLog.Versions.Last();
         }
 
         /// <summary>
