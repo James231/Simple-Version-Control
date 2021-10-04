@@ -215,7 +215,7 @@ namespace SimpleVersionControl
         public async Task<IEnumerable<VersionRef>> GetVersionsBetween(string versionOne, string versionTwo)
         {
             VersionRef refOne = await GetVersionRef(versionOne);
-            VersionRef refTwo = await GetVersionRef(versionOne);
+            VersionRef refTwo = await GetVersionRef(versionTwo);
             if (refOne == null || refTwo == null)
             {
                 return null;
@@ -258,7 +258,7 @@ namespace SimpleVersionControl
         public async Task<IEnumerable<ChangeRef>> GetChangesBetween(string versionOne, string versionTwo)
         {
             VersionRef refOne = await GetVersionRef(versionOne);
-            VersionRef refTwo = await GetVersionRef(versionOne);
+            VersionRef refTwo = await GetVersionRef(versionTwo);
             if (refOne == null || refTwo == null)
             {
                 return null;
