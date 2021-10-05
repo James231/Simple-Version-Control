@@ -211,8 +211,9 @@ namespace SimpleVersionControl
         /// </summary>
         /// <param name="versionOne">Name of first version.</param>
         /// <param name="versionTwo">Name of second version.</param>
+        /// <param name="includeLast">Set to true to include second version in returned IEnumerable.</param>
         /// <returns>List of application version references. Null if version doesn't exist.</returns>
-        public async Task<IEnumerable<VersionRef>> GetVersionsBetween(string versionOne, string versionTwo)
+        public async Task<IEnumerable<VersionRef>> GetVersionsBetween(string versionOne, string versionTwo, bool includeLast = false)
         {
             VersionRef refOne = await GetVersionRef(versionOne);
             VersionRef refTwo = await GetVersionRef(versionTwo);
@@ -221,7 +222,7 @@ namespace SimpleVersionControl
                 return null;
             }
 
-            return await GetVersionsBetween(refOne, refTwo);
+            return await GetVersionsBetween(refOne, refTwo, includeLast);
         }
 
         /// <summary>
@@ -229,8 +230,9 @@ namespace SimpleVersionControl
         /// </summary>
         /// <param name="versionOne">Reference to first version.</param>
         /// <param name="versionTwo">Reference to second version.</param>
+        /// <param name="includeLast">Set to true to include second version in returned IEnumerable.</param>
         /// <returns>List of application version references.</returns>
-        public async Task<IEnumerable<VersionRef>> GetVersionsBetween(VersionRef versionOne, VersionRef versionTwo)
+        public async Task<IEnumerable<VersionRef>> GetVersionsBetween(VersionRef versionOne, VersionRef versionTwo, bool includeLast = false)
         {
             if (await GetChangeLog() == null)
             {
@@ -246,7 +248,9 @@ namespace SimpleVersionControl
             int indexOfTwo = CachedChangeLog.Versions.IndexOf(versionTwo);
             int minIndex = Math.Min(indexOfOne, indexOfTwo);
             int maxIndex = Math.Max(indexOfOne, indexOfTwo);
-            return CachedChangeLog.Versions.GetRange(minIndex + 1, maxIndex - minIndex - 1);
+            int rangeStart = includeLast ? minIndex : minIndex + 1;
+            int rangeEnd = maxIndex - rangeStart;
+            return CachedChangeLog.Versions.GetRange(rangeStart, rangeEnd);
         }
 
         /// <summary>
@@ -254,8 +258,9 @@ namespace SimpleVersionControl
         /// </summary>
         /// <param name="versionOne">Name of first version.</param>
         /// <param name="versionTwo">Name of second version.</param>
+        /// <param name="includeLast">Set to true to include changes of second version in returned IEnumerable.</param>
         /// <returns>List of references to application changes. Null if version doesn't exist.</returns>
-        public async Task<IEnumerable<ChangeRef>> GetChangesBetween(string versionOne, string versionTwo)
+        public async Task<IEnumerable<ChangeRef>> GetChangesBetween(string versionOne, string versionTwo, bool includeLast = false)
         {
             VersionRef refOne = await GetVersionRef(versionOne);
             VersionRef refTwo = await GetVersionRef(versionTwo);
@@ -264,7 +269,7 @@ namespace SimpleVersionControl
                 return null;
             }
 
-            return await GetChangesBetween(refOne, refTwo);
+            return await GetChangesBetween(refOne, refTwo, includeLast);
         }
 
         /// <summary>
@@ -272,10 +277,11 @@ namespace SimpleVersionControl
         /// </summary>
         /// <param name="versionOne">Reference to first version.</param>
         /// <param name="versionTwo">Reference to second version.</param>
+        /// <param name="includeLast">Set to true to include changes of second version in returned IEnumerable.</param>
         /// <returns>List of references to application changes.</returns>
-        public async Task<IEnumerable<ChangeRef>> GetChangesBetween(VersionRef versionOne, VersionRef versionTwo)
+        public async Task<IEnumerable<ChangeRef>> GetChangesBetween(VersionRef versionOne, VersionRef versionTwo, bool includeLast = false)
         {
-            IEnumerable<VersionRef> versionsBetween = await GetVersionsBetween(versionOne, versionTwo);
+            IEnumerable<VersionRef> versionsBetween = await GetVersionsBetween(versionOne, versionTwo, includeLast);
             if (versionsBetween == null)
             {
                 return null;
